@@ -3,6 +3,7 @@ package com.stan.words;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import com.stan.words.repository.WordRepository;
 import com.stan.words.repository.WordRepositoryImpl;
@@ -11,8 +12,9 @@ public class Words {
 
 	public static void main(String[] args) {
 		int size = 50;
-		System.out.print("Please enter practise size: ");
+		System.out.print("How many words to practise today? ");
 		try (Scanner scanner = new Scanner(System.in)) {
+			long startTime = System.nanoTime();
 			if (scanner.hasNextInt()) {
 				size = scanner.nextInt();
 			}
@@ -29,7 +31,7 @@ public class Words {
 						break;
 				}
 				practise.add(word);
-				System.out.print("Remember Y:");
+				System.out.print("Remember (y): ");
 				if (scanner.hasNext()) {
 					if ("Y".equalsIgnoreCase(scanner.next()))
 						remember.add(word);
@@ -37,6 +39,10 @@ public class Words {
 			}
 			repository.increasePractiseCount(practise.toArray(new String[0]));
 			repository.increaseRememberCount(remember.toArray(new String[0]));
+			System.out.println(String.format("%s words practised", practise.size()));
+			System.out.println(String.format("%s words remembered", remember.size()));
+			long duration = TimeUnit.NANOSECONDS.toMinutes(System.nanoTime() - startTime);
+			System.out.print(String.format("Used %s mins", duration));
 		}
 
 	}
