@@ -22,14 +22,17 @@ public class WordRepositoryImpl implements WordRepository {
 	}
 
 	@Override
-	public List<String> getWords(int size) {
-		final String sql = "SELECT ENGLISH FROM WORD ORDER BY REMEMBER_COUNT ASC, UPDATE_DATE DESC, PRACTISE_COUNT DESC LIMIT ?";
-		List<String> list = new ArrayList<String>();
+	public List<Word> getWords(int size) {
+		final String sql = "SELECT ENGLISH,CHINESE FROM WORD ORDER BY REMEMBER_COUNT ASC, UPDATE_DATE DESC, PRACTISE_COUNT DESC LIMIT ?";
+		List<Word> list = new ArrayList<>();
 		try (PreparedStatement statement = dataSource.getConnection().prepareStatement(sql)) {
 			statement.setInt(1, size);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
-				list.add(rs.getString("ENGLISH"));
+				Word word = new Word();
+				word.setEnglish(rs.getString("ENGLISH"));
+				word.setChinese(rs.getString("CHINESE"));
+				list.add(word);
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface WordRepository {
 
-	List<String> getWords(int size);
+	List<Word> getWords(int size);
 
 	int increasePractiseCount(String[] words);
 

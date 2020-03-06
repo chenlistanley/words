@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import com.stan.words.repository.Word;
 import com.stan.words.repository.WordRepository;
 import com.stan.words.repository.WordRepositoryImpl;
 
@@ -19,22 +20,24 @@ public class Words {
 				size = scanner.nextInt();
 			}
 			WordRepository repository = new WordRepositoryImpl();
-			List<String> words = repository.getWords(size);
+			List<Word> words = repository.getWords(size);
 			List<String> practise = new ArrayList<>();
 			List<String> remember = new ArrayList<>();
 			for (int i = 0, max = words.size(); i < max; i++) {
-				String word = words.get(i);
-				System.out.print(String.format("%s ", word));
+				Word word = words.get(i);
+				String english = word.getEnglish();
+				System.out.print(String.format("%s ", english));
 				while (scanner.hasNext()) {
 					String s = scanner.next();
-					if (word.equals(s))
+					if (english.equals(s))
 						break;
 				}
-				practise.add(word);
+				practise.add(english);
+				System.out.println(word.getChinese());
 				System.out.print("Remember (y): ");
 				if (scanner.hasNext()) {
 					if ("Y".equalsIgnoreCase(scanner.next()))
-						remember.add(word);
+						remember.add(english);
 				}
 			}
 			repository.increasePractiseCount(practise.toArray(new String[0]));

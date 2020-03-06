@@ -1,11 +1,7 @@
 package com.stan.words.repository;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
-
-
 
 public class WordRepositoryTest {
 
@@ -13,8 +9,7 @@ public class WordRepositoryTest {
 
 	@Test
 	public void test_getWords() {
-		List<String> words = repository.getWords(10);
-		Assert.assertEquals(10, words.size());
+		Assert.assertEquals(10, repository.getWords(10).size());
 	}
 
 	@Test
