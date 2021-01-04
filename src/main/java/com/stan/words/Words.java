@@ -21,8 +21,8 @@ public class Words {
 			}
 			WordRepository repository = new WordRepositoryImpl();
 			List<Word> words = repository.getWords(size);
-			List<String> practise = new ArrayList<>();
-			List<String> remember = new ArrayList<>();
+			List<String> practises = new ArrayList<>();
+			List<String> remembers = new ArrayList<>();
 			for (int i = 0, max = words.size(); i < max; i++) {
 				Word word = words.get(i);
 				String english = word.getEnglish();
@@ -32,18 +32,18 @@ public class Words {
 					if (english.equals(s))
 						break;
 				}
-				practise.add(english);
+				practises.add(english);
 				System.out.println(word.getChinese());
 				System.out.print("Remember (y): ");
 				if (scanner.hasNext()) {
 					if ("Y".equalsIgnoreCase(scanner.next()))
-						remember.add(english);
+						remembers.add(english);
 				}
 			}
-			repository.increasePractiseCount(practise.toArray(new String[0]));
-			repository.increaseRememberCount(remember.toArray(new String[0]));
-			System.out.println(String.format("%s words practised", practise.size()));
-			System.out.println(String.format("%s words remembered", remember.size()));
+			repository.increasePractiseCount(practises);
+			repository.increaseRememberCount(remembers);
+			System.out.println(String.format("%s words practised", practises.size()));
+			System.out.println(String.format("%s words remembered", remembers.size()));
 			long duration = TimeUnit.NANOSECONDS.toMinutes(System.nanoTime() - startTime);
 			System.out.print(String.format("Used %s mins", duration));
 		}

@@ -6,8 +6,10 @@ public interface WordRepository {
 
 	List<Word> getWords(int size);
 
-	int increasePractiseCount(String[] words);
+	int increasePractiseCount(List<String> words);
 
-	int increaseRememberCount(String[] words);
+	int increaseRememberCount(List<String> words);
+
+	int saveWords(List<Word> words);
 
 }
